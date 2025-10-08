@@ -16,27 +16,30 @@ public class Main {
         int[] A_sorted = A.clone();
         Arrays.sort(A_sorted);
 
-        int[] Alice = new int[N / 2];
-        int[] Bob = new int[N / 2];
+        int[] Even = new int[N / 2];
+        int[] Odd  = new int[(N + 1) / 2];
 
-        for (int i = 0; i < N; i++) {
-            if (i % 2 == 0) {
-                Alice[i] = A_sorted[i];
+        // 0始まりに合わせて、末尾から走査。元の「iが偶数→Even / 奇数→Odd」の1始まり判定は (i+1)%2 で再現
+        for (int i = N - 1; i >= 0; i--) {
+            if ((i + 1) % 2 == 0) {
+                Even[i / 2] = A_sorted[i];
             } else {
-                Bob[i] = A_sorted[i];
+                Odd[i / 2] = A_sorted[i];
             }
         }
 
-        int Alice_sum = 0;
-        for (int i = 0; i < Alice.length; i++) {
-            Alice_sum += Alice[i];
+        int EvenSum = 0;
+        int OddSum = 0;
+        for (int i = 0; i < Even.length; i++) {
+            EvenSum += Even[i];
         }
-
-        int Bob_sum = 0;
-        for (int i = 0; i < Bob.length; i++) {
-            Bob_sum += Bob[i];
+        for (int i = 0; i < Odd.length; i++) {
+            OddSum += Odd[i];
         }
-
-        System.out.println(Alice_sum - Bob_sum);
+        if (EvenSum > OddSum) {
+            System.out.println(EvenSum - OddSum);
+        } else {
+            System.out.println(OddSum - EvenSum);
+        }
     }
 }
